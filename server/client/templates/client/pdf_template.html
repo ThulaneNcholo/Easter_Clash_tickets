@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #customers td,
+      #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #customers tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      #customers tr:hover {
+        background-color: #ddd;
+      }
+
+      #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04aa6d;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Easter Clash Of The Voices</h1>
+    <h2>Heidelberg</h2>
+    <h2>29 April 2022</h2>
+    <h3>Starts : 12:00 pm</h3>
+
+    <table id="customers">
+      <tr>
+        <td>Names</td>
+        <td>{{pdf_data.first_name}} {{pdf_data.last_name}}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>{{pdf_data.phone}}</td>
+      </tr>
+      <tr>
+        <td>Ticket Number</td>
+        <td>#{{pdf_data.ticket_number}}</td>
+      </tr>
+    </table>
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 3rem;
+      "
+    >
+      <img
+        src="{{pdf_data.qr_code.path}}"
+        alt=""
+        style="height: 200px; width: 200px"
+      />
+    </div>
+  </body>
+</html>

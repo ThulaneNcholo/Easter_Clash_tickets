@@ -1,0 +1,85 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% block content %}
+
+<style>
+  .btn-styling {
+    background-color: #f3c65e;
+    width: 70%;
+    color: black;
+  }
+</style>
+
+<div class="container mt-5">
+  <h3 class="mb-4">New Ticket</h3>
+
+  <form method="POST" autocomplete="off">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="first_name"
+            placeholder="First Name"
+          />
+          <label for="floatingInput">First Name</label>
+        </div>
+      </div>
+      <!-- end input item  -->
+      <div class="col-12 col-md-6">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="Last_name"
+            placeholder="Last Name"
+          />
+          <label for="floatingInput">Last Name</label>
+        </div>
+      </div>
+      <!-- end input item  -->
+      <div class="col-12 col-md-6">
+        <div class="form-floating mb-3">
+          <input
+            type="number"
+            class="form-control"
+            id="floatingInput"
+            name="phone"
+            placeholder="Phone Number"
+          />
+          <label for="floatingInput">Phone Number</label>
+        </div>
+      </div>
+      <!-- end input item  -->
+      <div class="col-12 col-md-6">
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="floatingInput"
+            name="email"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Email address</label>
+        </div>
+      </div>
+      <!-- end input item  -->
+    </div>
+
+    <center>
+      <button
+        type="submit"
+        name="submit_ticket"
+        class="btn btn-styling my-5 py-3"
+      >
+        CREATE TICKET
+      </button>
+    </center>
+  </form>
+</div>
+
+{% endblock %}

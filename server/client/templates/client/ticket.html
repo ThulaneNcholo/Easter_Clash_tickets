@@ -1,0 +1,167 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+
+<style>
+  p {
+    margin-bottom: 0px;
+  }
+
+  .btn-styling {
+    background-color: #f3c65e;
+    width: 100%;
+    color: black;
+  }
+
+  .pdf_button {
+    width: 100%;
+  }
+
+  .back-btn {
+    background-color: transparent;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    font-size: 27px;
+  }
+
+  .qr-image {
+    height: 100px;
+    width: 100px;
+  }
+</style>
+
+<div class="container">
+  <a href="{% url 'index' %}">
+    <button class="back-btn mt-5">
+      <i class="bi bi-arrow-left-circle-fill"></i>
+    </button>
+  </a>
+
+  <!-- ======= Messages Notification  ======= -->
+  <div>
+    {% for message in messages %}
+    <div class="alert alert-primary my-5" role="alert">{{message}}</div>
+    {% endfor %}
+  </div>
+
+  <h3 class="mt-5 mb-3">Ticket Details</h3>
+
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          <p class="text-secondary">Ticket # :</p>
+        </div>
+        <div class="col">
+          <p>#{{ticket.ticket_number}}</p>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          <p class="text-secondary">Names :</p>
+        </div>
+        <div class="col">
+          <p>{{ticket.first_name}} {{ticket.last_name}}</p>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          <p class="text-secondary">Phone :</p>
+        </div>
+        <div class="col">
+          <p>{{ticket.phone}}</p>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          <p class="text-secondary">Email :</p>
+        </div>
+        <div class="col">
+          <p>{{ticket.email}}</p>
+        </div>
+      </div>
+    </li>
+    {% if ticket.arrived == 'No'%}
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          <p class="text-secondary">arrived Status:</p>
+        </div>
+        <div class="col">
+          <p>{{ticket.arrived}}</p>
+        </div>
+      </div>
+    </li>
+    {% elif ticket.arrived == 'Yes' %}
+    <li class="list-group-item bg-dark">
+      <div class="row">
+        <div class="col">
+          <p class="text-white">arrived Status:</p>
+        </div>
+        <div class="col">
+          <p class="text-white">{{ticket.arrived}}</p>
+        </div>
+      </div>
+    </li>
+    {% endif %}
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          <p class="text-secondary">Qr Code:</p>
+        </div>
+        <div class="col">
+          <img src="{{ticket.qr_code.url}}" alt="" class="qr-image" />
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <center>
+    <div class="row my-5">
+      <div class="col">
+        <form method="POST">
+          {% csrf_token %}
+          <input
+            type="text"
+            value="{{data.ticket_number}}"
+            name="ticket_name"
+            hidden="true"
+          />
+          {% if ticket.arrived == 'Yes' %}
+          <button
+            type="submit"
+            name="unconfirm"
+            class="btn btn-styling bg-light border py-3"
+          >
+            undo
+          </button>
+          {% elif ticket.arrived == 'No' %}
+          <button
+            type="submit"
+            name="confirm_ticket"
+            class="btn btn-styling py-3"
+          >
+            Confirm Arrival
+          </button>
+          {% endif %}
+        </form>
+      </div>
+      <div class="col">
+        <a href="{% url 'generate_pdf' %}">
+          <button class="btn btn-dark py-3 pdf_button">Download PDF</button>
+        </a>
+      </div>
+    </div>
+  </center>
+</div>
+
+{% endblock %}

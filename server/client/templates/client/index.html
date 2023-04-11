@@ -1,0 +1,91 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% block content %}
+
+<style>
+  .card_shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .status {
+    font-size: 14px;
+  }
+
+  .add-icon {
+    color: #f3c65e;
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col">
+      <h1>Tickets</h1>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <a href="{% url 'create-ticket' %}">
+        <button class="btn btn-dark">
+          <i class="bi bi-plus-square-fill tex-white"></i> create ticket
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row gx-2">
+    <div class="col">
+      <div class="p-3 border card_shadow">
+        <h1>{{arrived_count}}</h1>
+        <h5>Arrived</h5>
+      </div>
+    </div>
+    <div class="col">
+      <div class="p-3 border card_shadow">
+        <h1>{{pending}}</h1>
+        <h5>Pending</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="list-group">
+    {% for data in list_tickets %}
+    <a
+      href="{% url 'ticket' data.ticket_number %}"
+      class="list-group-item list-group-item-action d-flex gap-3 py-3 card_shadow mb-3"
+      aria-current="true"
+    >
+      <i
+        class="bi bi-check-circle-fill"
+        style="font-size: 32px; color: #f3c65e"
+      ></i>
+
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">{{data.first_name}} {{data.last_name}}</h6>
+          <p class="mb-0 opacity-75">#{{data.ticket_number}}</p>
+        </div>
+        {% if data.arrived == 'Yes'%}
+        <small class="text-nowrap">
+          <button type="button" class="btn btn-dark rounded-pill status">
+            Arrived
+          </button>
+        </small>
+        {% elif data.arrived == 'No' %}
+        <small class="text-nowrap">
+          <button type="button" class="btn btn-light rounded-pill status">
+            Pending
+          </button>
+        </small>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+<div style="height: 200px; width: 200px"></div>
+
+{% endblock %}
